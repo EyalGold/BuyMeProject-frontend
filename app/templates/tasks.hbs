@@ -1,0 +1,51 @@
+{{outlet}}
+<div class="container">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="col-md-3 no-margin">Tasks</h1>
+                <button class="btn btn-default col-md-1 col-md-offset-7" onclick={{action "addTask"}}><span class="glyphicon glyphicon-plus"></span></button>
+            </div>
+        </div>
+
+        <table class="table col-md-12">
+            <tr>
+                <th class="center">State</th>
+                <th class="center">Description</th>
+                <th class="center">Action</th>
+            </tr>
+            {{#each model as |task|}}
+                <tr>
+                    <td style="width:10%">
+                        <div class="{{if task.editMode "hide"}} center"><input type="checkbox" checked={{task.done}} onclick={{ action "taskStateUpdated" task}}></div>
+                    </td>
+                    <td style="max-width:40%">
+                        <div>
+                            <span class="task-id">{{task.id}}.</span>
+                            <span class="task-body">
+                                <span class="{{if task.editMode "edit-mode"}} {{if task.done "done"}}">{{task.body}}</span>
+                                <span class="body-editing {{if task.editMode "" "edit-mode"}}">{{input type="text" value=task.body required=true class='form-control' width="100%"}}</span>
+                            </span>
+                        </div>
+                    </td>
+                    <td style="width:5%">
+                        <div class="{{if task.editMode "edit-mode"}}">
+                            <a {{action 'removeTask' task}} href class="edit-task">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                            <a {{action 'editTask' task}} href class="edit-task">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </div>
+                        <div class="{{if task.editMode "" "edit-mode"}}">
+                            <a {{action 'doneEditing' task}} href class="done-editing">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+            {{/each}}
+        </table>
+    </div>
+</div>
